@@ -1,4 +1,3 @@
-
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -13,7 +12,7 @@ export declare function unimplemented(): any;
 export declare class BaseError extends Error {
     constructor(message: string);
     message: string;
-    name: string;
+    readonly name: string;
     stack: any;
     toString(): string;
 }
@@ -23,5 +22,5 @@ export declare class BaseError extends Error {
 export declare class WrappedError extends BaseError {
     originalError: any;
     constructor(message: string, error: any);
-    stack: any;
+    readonly stack: any;
 }
