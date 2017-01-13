@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://angular.io/license
  */
 import { Inject, LOCALE_ID, Pipe } from '@angular/core/index';
-import { NumberWrapper, isBlank, isPresent } from '../facade/lang';
+import { NumberWrapper } from '../facade/lang';
 import { NumberFormatStyle, NumberFormatter } from './intl';
 import { InvalidPipeArgumentError } from './invalid_pipe_argument_error';
 const /** @type {?} */ _NUMBER_FORMAT_REGEXP = /^(\d+)?\.((\d+)(-(\d+))?)?$/;
@@ -21,7 +21,7 @@ const /** @type {?} */ _NUMBER_FORMAT_REGEXP = /^(\d+)?\.((\d+)(-(\d+))?)?$/;
  * @return {?}
  */
 function formatNumber(pipe, locale, value, style, digits, currency = null, currencyAsSymbol = false) {
-    if (isBlank(value))
+    if (value == null)
         return null;
     // Convert strings to numbers
     value = typeof value === 'string' && NumberWrapper.isNumeric(value) ? +value : value;
@@ -42,13 +42,13 @@ function formatNumber(pipe, locale, value, style, digits, currency = null, curre
         if (parts === null) {
             throw new Error(`${digits} is not a valid digit info for number pipes`);
         }
-        if (isPresent(parts[1])) {
+        if (parts[1] != null) {
             minInt = NumberWrapper.parseIntAutoRadix(parts[1]);
         }
-        if (isPresent(parts[3])) {
+        if (parts[3] != null) {
             minFraction = NumberWrapper.parseIntAutoRadix(parts[3]);
         }
-        if (isPresent(parts[5])) {
+        if (parts[5] != null) {
             maxFraction = NumberWrapper.parseIntAutoRadix(parts[5]);
         }
     }
@@ -61,6 +61,9 @@ function formatNumber(pipe, locale, value, style, digits, currency = null, curre
     });
 }
 /**
+ * \@ngModule CommonModule
+ * \@whatItDoes Formats a number according to locale rules.
+ * \@howToUse `number_expression | number[:digitInfo]`
  *
  * Formats a number as text. Group sizing and separator and other locale-specific
  * configurations are based on the active locale.
@@ -82,6 +85,7 @@ function formatNumber(pipe, locale, value, style, digits, currency = null, curre
  *
  * {\@example common/pipes/ts/number_pipe.ts region='NumberPipe'}
  *
+ * \@stable
  */
 export class DecimalPipe {
     /**
@@ -118,7 +122,11 @@ function DecimalPipe_tsickle_Closure_declarations() {
     DecimalPipe.prototype._locale;
 }
 /**
+ * \@ngModule CommonModule
+ * \@whatItDoes Formats a number as a percentage according to locale rules.
+ * \@howToUse `number_expression | percent[:digitInfo]`
  *
+ * \@description
  *
  * Formats a number as percentage.
  *
@@ -131,6 +139,7 @@ function DecimalPipe_tsickle_Closure_declarations() {
  *
  * {\@example common/pipes/ts/number_pipe.ts region='PercentPipe'}
  *
+ * \@stable
  */
 export class PercentPipe {
     /**
@@ -167,6 +176,10 @@ function PercentPipe_tsickle_Closure_declarations() {
     PercentPipe.prototype._locale;
 }
 /**
+ * \@ngModule CommonModule
+ * \@whatItDoes Formats a number as currency using locale rules.
+ * \@howToUse `number_expression | currency[:currencyCode[:symbolDisplay[:digitInfo]]]`
+ * \@description
  *
  * Use `currency` to format a number as currency.
  *
@@ -184,6 +197,7 @@ function PercentPipe_tsickle_Closure_declarations() {
  *
  * {\@example common/pipes/ts/number_pipe.ts region='CurrencyPipe'}
  *
+ * \@stable
  */
 export class CurrencyPipe {
     /**

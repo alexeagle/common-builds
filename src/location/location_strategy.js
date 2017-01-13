@@ -22,6 +22,7 @@ import { OpaqueToken } from '@angular/core/index';
  *
  * See these two classes for more.
  *
+ * \@stable
  * @abstract
  */
 export class LocationStrategy {

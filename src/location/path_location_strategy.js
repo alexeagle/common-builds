@@ -11,6 +11,8 @@ import { Location } from './location';
 import { APP_BASE_HREF, LocationStrategy } from './location_strategy';
 import { PlatformLocation } from './platform_location';
 /**
+ * \@whatItDoes Use URL for storing application location data.
+ * \@description
  * `PathLocationStrategy` is a {\@link LocationStrategy} used to configure the
  * {\@link Location} service to represent its state in the
  * [path](https://en.wikipedia.org/wiki/Uniform_Resource_Locator#Syntax) of the
@@ -32,6 +34,7 @@ import { PlatformLocation } from './platform_location';
  *
  * {\@example common/location/ts/path_location_component.ts region='LocationComponent'}
  *
+ * \@stable
  */
 export class PathLocationStrategy extends LocationStrategy {
     /**

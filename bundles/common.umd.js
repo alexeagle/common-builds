@@ -33,6 +33,7 @@
      * class
      * they are all platform independent.
      *
+     * \@stable
      * @abstract
      */
     var PlatformLocation = (function () {
@@ -124,6 +125,7 @@
      *
      * See these two classes for more.
      *
+     * \@stable
      * @abstract
      */
     var LocationStrategy = (function () {
@@ -337,6 +339,8 @@
     }
 
     /**
+     * \@whatItDoes `Location` is a service that applications can use to interact with a browser's URL.
+     * \@description
      * Depending on which {\@link LocationStrategy} is used, `Location` will either persist
      * to the URL's path or the URL's hash segment.
      *
@@ -353,6 +357,7 @@
      *
      * ### Example
      * {\@example common/location/ts/path_location_component.ts region='LocationComponent'}
+     * \@stable
      */
     var Location = (function () {
         /**
@@ -539,6 +544,8 @@
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
     /**
+     * \@whatItDoes Use URL hash for storing application location data.
+     * \@description
      * `HashLocationStrategy` is a {\@link LocationStrategy} used to configure the
      * {\@link Location} service to represent its state in the
      * [hash fragment](https://en.wikipedia.org/wiki/Uniform_Resource_Locator#Syntax)
@@ -551,6 +558,7 @@
      *
      * {\@example common/location/ts/hash_location_component.ts region='LocationComponent'}
      *
+     * \@stable
      */
     var HashLocationStrategy = (function (_super) {
         __extends(HashLocationStrategy, _super);
@@ -659,6 +667,8 @@
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
     /**
+     * \@whatItDoes Use URL for storing application location data.
+     * \@description
      * `PathLocationStrategy` is a {\@link LocationStrategy} used to configure the
      * {\@link Location} service to represent its state in the
      * [path](https://en.wikipedia.org/wiki/Uniform_Resource_Locator#Syntax) of the
@@ -680,6 +690,7 @@
      *
      * {\@example common/location/ts/path_location_component.ts region='LocationComponent'}
      *
+     * \@stable
      */
     var PathLocationStrategy = (function (_super) {
         __extends$1(PathLocationStrategy, _super);
@@ -782,6 +793,7 @@
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
     /**
+     * \@experimental
      * @abstract
      */
     var NgLocalization = (function () {
@@ -800,6 +812,7 @@
      * - "=value" when the case exists,
      * - the plural category otherwise
      *
+     * \@internal
      * @param {?} value
      * @param {?} cases
      * @param {?} ngLocalization
@@ -822,6 +835,7 @@
     /**
      * Returns the plural case based on the locale
      *
+     * \@experimental
      */
     var NgLocaleLocalization = (function (_super) {
         __extends$2(NgLocaleLocalization, _super);
@@ -878,6 +892,7 @@
     /**
      * Returns the plural case based on the locale
      *
+     * \@experimental
      * @param {?} locale
      * @param {?} nLike
      * @return {?}
@@ -1296,8 +1311,11 @@
     }
 
     /**
+     * \@ngModule CommonModule
      *
+     * \@whatItDoes Adds and removes CSS classes on an HTML element.
      *
+     * \@howToUse
      * ```
      *     <some-element [ngClass]="'first second'">...</some-element>
      *
@@ -1306,8 +1324,11 @@
      *     <some-element [ngClass]="{'first': true, 'second': true, 'third': false}">...</some-element>
      *
      *     <some-element [ngClass]="stringExp|arrayExp|objExp">...</some-element>
+     *
+     *     <some-element [ngClass]="{'class1 class2 class3' : true}">...</some-element>
      * ```
      *
+     * \@description
      *
      * The CSS classes are updated as follows, depending on the type of the expression evaluation:
      * - `string` - the CSS classes listed in the string (space delimited) are added,
@@ -1315,6 +1336,7 @@
      * - `Object` - keys are CSS classes that get added when the expression given in the value
      *              evaluates to a truthy value, otherwise they are removed.
      *
+     * \@stable
      */
     var NgClass = (function () {
         /**
@@ -1371,15 +1393,15 @@
          */
         NgClass.prototype.ngDoCheck = function () {
             if (this._iterableDiffer) {
-                var /** @type {?} */ changes = this._iterableDiffer.diff(this._rawClass);
-                if (changes) {
-                    this._applyIterableChanges(changes);
+                var /** @type {?} */ iterableChanges = this._iterableDiffer.diff(/** @type {?} */ (this._rawClass));
+                if (iterableChanges) {
+                    this._applyIterableChanges(iterableChanges);
                 }
             }
             else if (this._keyValueDiffer) {
-                var /** @type {?} */ changes = this._keyValueDiffer.diff(this._rawClass);
-                if (changes) {
-                    this._applyKeyValueChanges(changes);
+                var /** @type {?} */ keyValueChanges = this._keyValueDiffer.diff(/** @type {?} */ (this._rawClass));
+                if (keyValueChanges) {
+                    this._applyKeyValueChanges(keyValueChanges);
                 }
             }
         };
@@ -1442,7 +1464,7 @@
                 }
                 else {
                     Object.keys(rawClassVal).forEach(function (klass) {
-                        if (isPresent(rawClassVal[klass]))
+                        if (rawClassVal[klass] != null)
                             _this._toggleClass(klass, !isCleanup);
                     });
                 }
@@ -1457,7 +1479,7 @@
             var _this = this;
             klass = klass.trim();
             if (klass) {
-                klass.split(/\s+/g).forEach(function (klass) { _this._renderer.setElementClass(_this._ngEl.nativeElement, klass, enabled); });
+                klass.split(/\s+/g).forEach(function (klass) { _this._renderer.setElementClass(_this._ngEl.nativeElement, klass, !!enabled); });
             }
         };
         NgClass.decorators = [
@@ -1475,6 +1497,93 @@
             'ngClass': [{ type: _angular_core.Input },],
         };
         return NgClass;
+    }());
+
+    /**
+     * Instantiates a single {\@link Component} type and inserts its Host View into current View.
+     * `NgComponentOutlet` provides a declarative approach for dynamic component creation.
+     *
+     * `NgComponentOutlet` requires a component type, if a falsy value is set the view will clear and
+     * any existing component will get destroyed.
+     *
+     * ### Fine tune control
+     *
+     * You can control the component creation process by using the following optional attributes:
+     *
+     * * `ngOutletInjector`: Optional custom {\@link Injector} that will be used as parent for the
+     * Component.
+     * Defaults to the injector of the current view container.
+     *
+     * * `ngOutletProviders`: Optional injectable objects ({\@link Provider}) that are visible to the
+     * component.
+     *
+     * * `ngOutletContent`: Optional list of projectable nodes to insert into the content
+     * section of the component, if exists. ({\@link NgContent}).
+     *
+     *
+     * ### Syntax
+     *
+     * Simple
+     * ```
+     * <ng-container *ngComponentOutlet="componentTypeExpression"></ng-container>
+     * ```
+     *
+     * Customized
+     * ```
+     * <ng-container *ngComponentOutlet="componentTypeExpression;
+     *                                   injector: injectorExpression;
+     *                                   content: contentNodesExpression">
+     * </ng-container>
+     * ```
+     *
+     * # Example
+     *
+     * {\@example common/ngComponentOutlet/ts/module.ts region='SimpleExample'}
+     *
+     * A more complete example with additional options:
+     *
+     * {\@example common/ngComponentOutlet/ts/module.ts region='CompleteExample'}
+     *
+     * \@experimental
+     */
+    var NgComponentOutlet = (function () {
+        /**
+         * @param {?} _cmpFactoryResolver
+         * @param {?} _viewContainerRef
+         */
+        function NgComponentOutlet(_cmpFactoryResolver, _viewContainerRef) {
+            this._cmpFactoryResolver = _cmpFactoryResolver;
+            this._viewContainerRef = _viewContainerRef;
+        }
+        /**
+         * @param {?} changes
+         * @return {?}
+         */
+        NgComponentOutlet.prototype.ngOnChanges = function (changes) {
+            if (this.componentRef) {
+                this._viewContainerRef.remove(this._viewContainerRef.indexOf(this.componentRef.hostView));
+            }
+            this._viewContainerRef.clear();
+            this.componentRef = null;
+            if (this.ngComponentOutlet) {
+                var /** @type {?} */ injector = this.ngComponentOutletInjector || this._viewContainerRef.parentInjector;
+                this.componentRef = this._viewContainerRef.createComponent(this._cmpFactoryResolver.resolveComponentFactory(this.ngComponentOutlet), this._viewContainerRef.length, injector, this.ngComponentOutletContent);
+            }
+        };
+        NgComponentOutlet.decorators = [
+            { type: _angular_core.Directive, args: [{ selector: '[ngComponentOutlet]' },] },
+        ];
+        /** @nocollapse */
+        NgComponentOutlet.ctorParameters = function () { return [
+            { type: _angular_core.ComponentFactoryResolver, },
+            { type: _angular_core.ViewContainerRef, },
+        ]; };
+        NgComponentOutlet.propDecorators = {
+            'ngComponentOutlet': [{ type: _angular_core.Input },],
+            'ngComponentOutletInjector': [{ type: _angular_core.Input },],
+            'ngComponentOutletContent': [{ type: _angular_core.Input },],
+        };
+        return NgComponentOutlet;
     }());
 
     var NgForRow = (function () {
@@ -1584,6 +1693,7 @@
      * See a [live demo](http://plnkr.co/edit/KVuXxDp0qinGDyo307QW?p=preview) for a more detailed
      * example.
      *
+     * \@stable
      */
     var NgFor = (function () {
         /**
@@ -1599,6 +1709,28 @@
             this._cdr = _cdr;
             this._differ = null;
         }
+        Object.defineProperty(NgFor.prototype, "ngForTrackBy", {
+            /**
+             * @return {?}
+             */
+            get: function () { return this._trackByFn; },
+            /**
+             * @param {?} fn
+             * @return {?}
+             */
+            set: function (fn) {
+                if (_angular_core.isDevMode() && fn != null && typeof fn !== 'function') {
+                    // TODO(vicb): use a log service once there is a public one available
+                    if ((console) && (console.warn)) {
+                        console.warn(("trackBy must be a function, but received " + JSON.stringify(fn) + ". ") +
+                            "See https://angular.io/docs/ts/latest/api/common/index/NgFor-directive.html#!#change-propagation for more information.");
+                    }
+                }
+                this._trackByFn = fn;
+            },
+            enumerable: true,
+            configurable: true
+        });
         Object.defineProperty(NgFor.prototype, "ngForTemplate", {
             /**
              * @param {?} value
@@ -1717,14 +1849,14 @@
      * Conditionally includes a template based on the value of an `expression`.
      *
      * `ngIf` evaluates the `expression` and then renders the `then` or `else` template in its place
-     * when expression is thruthy or falsy respectively. Typically the:
+     * when expression is truthy or falsy respectively. Typically the:
      *  - `then` template is the inline template of `ngIf` unless bound to a different value.
-     *  - `else` template is blank unless its bound.
+     *  - `else` template is blank unless it is bound.
      *
      * # Most common usage
      *
-     * The most common usage of the `ngIf` is to conditionally show the inline template as seen in this
-     * example:
+     * The most common usage of the `ngIf` directive is to conditionally show the inline template as
+     * seen in this example:
      * {\@example common/ngIf/ts/module.ts region='NgIfSimple'}
      *
      * # Showing an alternative template using `else`
@@ -1740,13 +1872,13 @@
      *
      * Usually the `then` template is the inlined template of the `ngIf`, but it can be changed using
      * a binding (just like `else`). Because `then` and `else` are bindings, the template references can
-     * change at runtime as shown in thise example.
+     * change at runtime as shown in this example.
      *
      * {\@example common/ngIf/ts/module.ts region='NgIfThenElse'}
      *
      * # Storing conditional result in a variable
      *
-     * A common patter is that we need to show a set of properties from the same object. if the
+     * A common pattern is that we need to show a set of properties from the same object. If the
      * object is undefined, then we have to use the safe-traversal-operator `?.` to guard against
      * dereferencing a `null` value. This is especially the case when waiting on async data such as
      * when using the `async` pipe as shown in folowing example:
@@ -1755,10 +1887,10 @@
      * Hello {{ (userStream|async)?.last }}, {{ (userStream|async)?.first }}!
      * ```
      *
-     * There are several inefficiencies in the above example.
-     *  - We create multiple subscriptions on the `userStream`. One for each `async` pipe, or two
-     *    as shown in the example above.
-     *  - We can not display an alternative screen while waiting for the data to arrive asynchronously.
+     * There are several inefficiencies in the above example:
+     *  - We create multiple subscriptions on `userStream`. One for each `async` pipe, or two in the
+     *    example above.
+     *  - We cannot display an alternative screen while waiting for the data to arrive asynchronously.
      *  - We have to use the safe-traversal-operator `?.` to access properties, which is cumbersome.
      *  - We have to place the `async` pipe in parenthesis.
      *
@@ -1770,7 +1902,7 @@
      * Notice that:
      *  - We use only one `async` pipe and hence only one subscription gets created.
      *  - `ngIf` stores the result of the `userStream|async` in the local variable `user`.
-     *  - The local `user` can than be bound repeatedly in a more efficient way.
+     *  - The local `user` can then be bound repeatedly in a more efficient way.
      *  - No need to use the safe-traversal-operator `?.` to access properties as `ngIf` will only
      *    display the data if `userStream` returns a value.
      *  - We can display an alternative template while waiting for the data.
@@ -1780,7 +1912,7 @@
      * Simple form:
      * - `<div *ngIf="condition">...</div>`
      * - `<div template="ngIf condition">...</div>`
-     * - `<ng-container [ngIf]="condition"><div>...</div></ng-container>`
+     * - `<template [ngIf]="condition"><div>...</div></template>`
      *
      * Form with an else block:
      * ```
@@ -1801,6 +1933,7 @@
      * <template #elseBlock>...</template>
      * ```
      *
+     * \@stable
      */
     var NgIf = (function () {
         /**
@@ -1940,9 +2073,12 @@
         return SwitchView;
     }());
     /**
+     * \@ngModule CommonModule
      *
+     * \@whatItDoes Adds / removes DOM sub-trees when the nest match expressions matches the switch
      *             expression.
      *
+     * \@howToUse
      * ```
      *     <container-element [ngSwitch]="switch_expression">
      *       <some-element *ngSwitchCase="match_expression_1">...</some-element>
@@ -1956,6 +2092,7 @@
      *       <some-element *ngSwitchDefault>...</some-element>
      *     </container-element>
      * ```
+     * \@description
      *
      * `NgSwitch` stamps out nested views when their match expression value matches the value of the
      * switch expression.
@@ -1974,6 +2111,7 @@
      * When no matching expression is found on a `ngSwitchCase` view, the `ngSwitchDefault` view is
      * stamped out.
      *
+     * \@stable
      */
     var NgSwitch = (function () {
         function NgSwitch() {
@@ -1997,10 +2135,12 @@
             configurable: true
         });
         /**
+         * \@internal
          * @return {?}
          */
         NgSwitch.prototype._addCase = function () { return this._caseCount++; };
         /**
+         * \@internal
          * @param {?} view
          * @return {?}
          */
@@ -2011,6 +2151,7 @@
             this._defaultViews.push(view);
         };
         /**
+         * \@internal
          * @param {?} value
          * @return {?}
          */
@@ -2049,15 +2190,19 @@
         return NgSwitch;
     }());
     /**
+     * \@ngModule CommonModule
      *
+     * \@whatItDoes Creates a view that will be added/removed from the parent {\@link NgSwitch} when the
      *             given expression evaluate to respectively the same/different value as the switch
      *             expression.
      *
+     * \@howToUse
      * ```
      * <container-element [ngSwitch]="switch_expression">
      *   <some-element *ngSwitchCase="match_expression_1">...</some-element>
      * </container-element>
      * ```
+     * \@description
      *
      * Insert the sub-tree when the expression evaluates to the same value as the enclosing switch
      * expression.
@@ -2066,6 +2211,7 @@
      *
      * See {\@link NgSwitch} for more details and example.
      *
+     * \@stable
      */
     var NgSwitchCase = (function () {
         /**
@@ -2097,9 +2243,12 @@
         return NgSwitchCase;
     }());
     /**
+     * \@ngModule CommonModule
+     * \@whatItDoes Creates a view that is added to the parent {\@link NgSwitch} when no case expressions
      * match the
      *             switch expression.
      *
+     * \@howToUse
      * ```
      * <container-element [ngSwitch]="switch_expression">
      *   <some-element *ngSwitchCase="match_expression_1">...</some-element>
@@ -2107,12 +2256,14 @@
      * </container-element>
      * ```
      *
+     * \@description
      *
      * Insert the sub-tree when no case expressions evaluate to the same value as the enclosing switch
      * expression.
      *
      * See {\@link NgSwitch} for more details and example.
      *
+     * \@stable
      */
     var NgSwitchDefault = (function () {
         /**
@@ -2136,17 +2287,20 @@
     }());
 
     /**
+     * \@ngModule CommonModule
      *
+     * \@whatItDoes Adds / removes DOM sub-trees based on a numeric value. Tailored for pluralization.
      *
+     * \@howToUse
      * ```
      * <some-element [ngPlural]="value">
-     *   <ng-container *ngPluralCase="'=0'">there is nothing</ng-container>
-     *   <ng-container *ngPluralCase="'=1'">there is one</ng-container>
-     *   <ng-container *ngPluralCase="'few'">there are a few</ng-container>
-     *   <ng-container *ngPluralCase="'other'">there are exactly #</ng-container>
+     *   <template ngPluralCase="=0">there is nothing</template>
+     *   <template ngPluralCase="=1">there is one</template>
+     *   <template ngPluralCase="few">there are a few</template>
      * </some-element>
      * ```
      *
+     * \@description
      *
      * Displays DOM sub-trees that match the switch expression value, or failing that, DOM sub-trees
      * that match the switch expression's pluralization category.
@@ -2161,6 +2315,7 @@
      *
      * See http://cldr.unicode.org/index/cldr-spec/plural-rules
      *
+     * \@experimental
      */
     var NgPlural = (function () {
         /**
@@ -2227,18 +2382,22 @@
         return NgPlural;
     }());
     /**
+     * \@ngModule CommonModule
      *
+     * \@whatItDoes Creates a view that will be added/removed from the parent {\@link NgPlural} when the
      *             given expression matches the plural expression according to CLDR rules.
      *
+     * \@howToUse
      * ```
      * <some-element [ngPlural]="value">
-     *   <ng-container *ngPluralCase="'=0'">...</ng-container>
-     *   <ng-container *ngPluralCase="'other'">...</ng-container>
+     *   <template ngPluralCase="=0">...</template>
+     *   <template ngPluralCase="other">...</template>
      * </some-element>
      * ```
      *
      * See {\@link NgPlural} for more details and example.
      *
+     * \@experimental
      */
     var NgPluralCase = (function () {
         /**
@@ -2265,8 +2424,11 @@
     }());
 
     /**
+     * \@ngModule CommonModule
      *
+     * \@whatItDoes Update an HTML element styles.
      *
+     * \@howToUse
      * ```
      * <some-element [ngStyle]="{'font-style': styleExp}">...</some-element>
      *
@@ -2275,11 +2437,13 @@
      * <some-element [ngStyle]="objExp">...</some-element>
      * ```
      *
+     * \@description
      *
      * The styles are updated according to the value of the expression evaluation:
      * - keys are style names with an optional `.<unit>` suffix (ie 'top.px', 'font-style.em'),
      * - values are the values assigned to those properties (expressed in the given unit).
      *
+     * \@stable
      */
     var NgStyle = (function () {
         /**
@@ -2334,8 +2498,8 @@
          */
         NgStyle.prototype._setStyle = function (nameAndUnit, value) {
             var _a = nameAndUnit.split('.'), name = _a[0], unit = _a[1];
-            value = value && unit ? "" + value + unit : value;
-            this._renderer.setElementStyle(this._ngEl.nativeElement, name, value);
+            value = value != null && unit ? "" + value + unit : value;
+            this._renderer.setElementStyle(this._ngEl.nativeElement, name, /** @type {?} */ (value));
         };
         NgStyle.decorators = [
             { type: _angular_core.Directive, args: [{ selector: '[ngStyle]' },] },
@@ -2353,21 +2517,28 @@
     }());
 
     /**
+     * \@ngModule CommonModule
      *
+     * \@whatItDoes Inserts an embedded view from a prepared `TemplateRef`
      *
+     * \@howToUse
      * ```
-     * <template [ngTemplateOutlet]="templateRefExpression"
-     *           [ngOutletContext]="objectExpression">
-     * </template>
+     * <ng-container *ngTemplateOutlet="templateRefExp; context: contextExp"></ng-container>
      * ```
      *
+     * \@description
      *
-     * You can attach a context object to the `EmbeddedViewRef` by setting `[ngOutletContext]`.
-     * `[ngOutletContext]` should be an object, the object's keys will be the local template variables
-     * available within the `TemplateRef`.
+     * You can attach a context object to the `EmbeddedViewRef` by setting `[ngTemplateOutletContext]`.
+     * `[ngTemplateOutletContext]` should be an object, the object's keys will be available for binding
+     * by the local template `let` declarations.
      *
      * Note: using the key `$implicit` in the context object will set it's value as default.
      *
+     * # Example
+     *
+     * {\@example common/ngTemplateOutlet/ts/module.ts region='NgTemplateOutlet'}
+     *
+     * \@experimental
      */
     var NgTemplateOutlet = (function () {
         /**
@@ -2378,19 +2549,11 @@
         }
         Object.defineProperty(NgTemplateOutlet.prototype, "ngOutletContext", {
             /**
+             * @deprecated v4.0.0 - Renamed to ngTemplateOutletContext.
              * @param {?} context
              * @return {?}
              */
-            set: function (context) { this._context = context; },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(NgTemplateOutlet.prototype, "ngTemplateOutlet", {
-            /**
-             * @param {?} templateRef
-             * @return {?}
-             */
-            set: function (templateRef) { this._templateRef = templateRef; },
+            set: function (context) { this.ngTemplateOutletContext = context; },
             enumerable: true,
             configurable: true
         });
@@ -2402,8 +2565,8 @@
             if (this._viewRef) {
                 this._viewContainerRef.remove(this._viewContainerRef.indexOf(this._viewRef));
             }
-            if (this._templateRef) {
-                this._viewRef = this._viewContainerRef.createEmbeddedView(this._templateRef, this._context);
+            if (this.ngTemplateOutlet) {
+                this._viewRef = this._viewContainerRef.createEmbeddedView(this.ngTemplateOutlet, this.ngTemplateOutletContext);
             }
         };
         NgTemplateOutlet.decorators = [
@@ -2414,8 +2577,9 @@
             { type: _angular_core.ViewContainerRef, },
         ]; };
         NgTemplateOutlet.propDecorators = {
-            'ngOutletContext': [{ type: _angular_core.Input },],
+            'ngTemplateOutletContext': [{ type: _angular_core.Input },],
             'ngTemplateOutlet': [{ type: _angular_core.Input },],
+            'ngOutletContext': [{ type: _angular_core.Input },],
         };
         return NgTemplateOutlet;
     }());
@@ -2426,6 +2590,7 @@
      */
     var /** @type {?} */ COMMON_DIRECTIVES = [
         NgClass,
+        NgComponentOutlet,
         NgFor,
         NgIf,
         NgTemplateOutlet,
@@ -2444,6 +2609,9 @@
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
+    /**
+     * \@stable
+     */
     var BaseError = (function (_super) {
         __extends$4(BaseError, _super);
         /**
@@ -2498,6 +2666,9 @@
         BaseError.prototype.toString = function () { return this._nativeError.toString(); };
         return BaseError;
     }(Error));
+    /**
+     * \@stable
+     */
     var WrappedError = (function (_super) {
         __extends$4(WrappedError, _super);
         /**
@@ -2595,6 +2766,10 @@
     var /** @type {?} */ _promiseStrategy = new PromiseStrategy();
     var /** @type {?} */ _observableStrategy = new ObservableStrategy();
     /**
+     * \@ngModule CommonModule
+     * \@whatItDoes Unwraps a value from an asynchronous primitive.
+     * \@howToUse `observable_or_promise_expression | async`
+     * \@description
      * The `async` pipe subscribes to an `Observable` or `Promise` and returns the latest value it has
      * emitted. When a new value is emitted, the `async` pipe marks the component to be checked for
      * changes. When the component gets destroyed, the `async` pipe unsubscribes automatically to avoid
@@ -2613,6 +2788,7 @@
      *
      * {\@example common/pipes/ts/async_pipe.ts region='AsyncPipeObservable'}
      *
+     * \@stable
      */
     var AsyncPipe = (function () {
         /**
@@ -2713,8 +2889,9 @@
     /**
      * Transforms text to lowercase.
      *
-     * {\@example  core/pipes/ts/lowerupper_pipe/lowerupper_pipe_example.ts region='LowerUpperPipe' }
+     * {\@example  common/pipes/ts/lowerupper_pipe.ts region='LowerUpperPipe' }
      *
+     * \@stable
      */
     var LowerCasePipe = (function () {
         function LowerCasePipe() {
@@ -2739,8 +2916,21 @@
         return LowerCasePipe;
     }());
     /**
+     * Helper method to transform a single word to titlecase.
+     *
+     * \@stable
+     * @param {?} word
+     * @return {?}
+     */
+    function titleCaseWord(word) {
+        if (!word)
+            return word;
+        return word[0].toUpperCase() + word.substr(1).toLowerCase();
+    }
+    /**
      * Transforms text to titlecase.
      *
+     * \@stable
      */
     var TitleCasePipe = (function () {
         function TitleCasePipe() {
@@ -2755,7 +2945,7 @@
             if (typeof value !== 'string') {
                 throw new InvalidPipeArgumentError(TitleCasePipe, value);
             }
-            return value[0].toUpperCase() + value.substr(1).toLowerCase();
+            return value.split(/\b/g).map(function (word) { return titleCaseWord(word); }).join('');
         };
         TitleCasePipe.decorators = [
             { type: _angular_core.Pipe, args: [{ name: 'titlecase' },] },
@@ -2767,6 +2957,7 @@
     /**
      * Transforms text to uppercase.
      *
+     * \@stable
      */
     var UpperCasePipe = (function () {
         function UpperCasePipe() {
@@ -3045,6 +3236,10 @@
     }());
 
     /**
+     * \@ngModule CommonModule
+     * \@whatItDoes Formats a date according to locale rules.
+     * \@howToUse `date_expression | date[:format]`
+     * \@description
      *
      * Where:
      * - `expression` is a date object or a number (milliseconds since UTC epoch) or an ISO string
@@ -3107,6 +3302,7 @@
      *
      * {\@example common/pipes/ts/date_pipe.ts region='DatePipe'}
      *
+     * \@stable
      */
     var DatePipe = (function () {
         /**
@@ -3185,6 +3381,10 @@
 
     var /** @type {?} */ _INTERPOLATION_REGEXP = /#/g;
     /**
+     * \@ngModule CommonModule
+     * \@whatItDoes Maps a value to a string that pluralizes the value according to locale rules.
+     * \@howToUse `expression | i18nPlural:mapping`
+     * \@description
      *
      *  Where:
      *  - `expression` is a number.
@@ -3195,6 +3395,7 @@
      *
      * {\@example common/pipes/ts/i18n_pipe.ts region='I18nPluralPipeComponent'}
      *
+     * \@experimental
      */
     var I18nPluralPipe = (function () {
         /**
@@ -3209,7 +3410,7 @@
          * @return {?}
          */
         I18nPluralPipe.prototype.transform = function (value, pluralMap) {
-            if (isBlank(value))
+            if (value == null)
                 return '';
             if (typeof pluralMap !== 'object' || pluralMap === null) {
                 throw new InvalidPipeArgumentError(I18nPluralPipe, pluralMap);
@@ -3228,6 +3429,10 @@
     }());
 
     /**
+     * \@ngModule CommonModule
+     * \@whatItDoes Generic selector that displays the string that matches the current value.
+     * \@howToUse `expression | i18nSelect:mapping`
+     * \@description
      *
      *  Where `mapping` is an object that indicates the text that should be displayed
      *  for different values of the provided `expression`.
@@ -3271,12 +3476,17 @@
     }());
 
     /**
+     * \@ngModule CommonModule
+     * \@whatItDoes Converts value into JSON string.
+     * \@howToUse `expression | json`
+     * \@description
      *
      * Converts value into string using `JSON.stringify`. Useful for debugging.
      *
      * ### Example
      * {\@example common/pipes/ts/json_pipe.ts region='JsonPipe'}
      *
+     * \@stable
      */
     var JsonPipe = (function () {
         function JsonPipe() {
@@ -3308,7 +3518,7 @@
     function formatNumber(pipe, locale, value, style, digits, currency, currencyAsSymbol) {
         if (currency === void 0) { currency = null; }
         if (currencyAsSymbol === void 0) { currencyAsSymbol = false; }
-        if (isBlank(value))
+        if (value == null)
             return null;
         // Convert strings to numbers
         value = typeof value === 'string' && NumberWrapper.isNumeric(value) ? +value : value;
@@ -3329,13 +3539,13 @@
             if (parts === null) {
                 throw new Error(digits + " is not a valid digit info for number pipes");
             }
-            if (isPresent(parts[1])) {
+            if (parts[1] != null) {
                 minInt = NumberWrapper.parseIntAutoRadix(parts[1]);
             }
-            if (isPresent(parts[3])) {
+            if (parts[3] != null) {
                 minFraction = NumberWrapper.parseIntAutoRadix(parts[3]);
             }
-            if (isPresent(parts[5])) {
+            if (parts[5] != null) {
                 maxFraction = NumberWrapper.parseIntAutoRadix(parts[5]);
             }
         }
@@ -3348,6 +3558,9 @@
         });
     }
     /**
+     * \@ngModule CommonModule
+     * \@whatItDoes Formats a number according to locale rules.
+     * \@howToUse `number_expression | number[:digitInfo]`
      *
      * Formats a number as text. Group sizing and separator and other locale-specific
      * configurations are based on the active locale.
@@ -3369,6 +3582,7 @@
      *
      * {\@example common/pipes/ts/number_pipe.ts region='NumberPipe'}
      *
+     * \@stable
      */
     var DecimalPipe = (function () {
         /**
@@ -3396,7 +3610,11 @@
         return DecimalPipe;
     }());
     /**
+     * \@ngModule CommonModule
+     * \@whatItDoes Formats a number as a percentage according to locale rules.
+     * \@howToUse `number_expression | percent[:digitInfo]`
      *
+     * \@description
      *
      * Formats a number as percentage.
      *
@@ -3409,6 +3627,7 @@
      *
      * {\@example common/pipes/ts/number_pipe.ts region='PercentPipe'}
      *
+     * \@stable
      */
     var PercentPipe = (function () {
         /**
@@ -3436,6 +3655,10 @@
         return PercentPipe;
     }());
     /**
+     * \@ngModule CommonModule
+     * \@whatItDoes Formats a number as currency using locale rules.
+     * \@howToUse `number_expression | currency[:currencyCode[:symbolDisplay[:digitInfo]]]`
+     * \@description
      *
      * Use `currency` to format a number as currency.
      *
@@ -3453,6 +3676,7 @@
      *
      * {\@example common/pipes/ts/number_pipe.ts region='CurrencyPipe'}
      *
+     * \@stable
      */
     var CurrencyPipe = (function () {
         /**
@@ -3485,6 +3709,10 @@
     }());
 
     /**
+     * \@ngModule CommonModule
+     * \@whatItDoes Creates a new List or String containing a subset (slice) of the elements.
+     * \@howToUse `array_or_string_expression | slice:start[:end]`
+     * \@description
      *
      * Where the input expression is a `List` or `String`, and:
      * - `start`: The starting index of the subset to return.
@@ -3522,6 +3750,7 @@
      *
      * {\@example common/pipes/ts/slice_pipe.ts region='SlicePipe_string'}
      *
+     * \@stable
      */
     var SlicePipe = (function () {
         function SlicePipe() {
@@ -3533,7 +3762,7 @@
          * @return {?}
          */
         SlicePipe.prototype.transform = function (value, start, end) {
-            if (isBlank(value))
+            if (value == null)
                 return value;
             if (!this.supports(value)) {
                 throw new InvalidPipeArgumentError(SlicePipe, value);
@@ -3574,6 +3803,7 @@
     /**
      * The module that includes all the basic Angular directives like {\@link NgIf}, {\@link NgFor}, ...
      *
+     * \@stable
      */
     var CommonModule = (function () {
         function CommonModule() {
@@ -3610,6 +3840,7 @@
     exports.NgSwitchCase = NgSwitchCase;
     exports.NgSwitchDefault = NgSwitchDefault;
     exports.NgTemplateOutlet = NgTemplateOutlet;
+    exports.NgComponentOutlet = NgComponentOutlet;
     exports.AsyncPipe = AsyncPipe;
     exports.DatePipe = DatePipe;
     exports.I18nPluralPipe = I18nPluralPipe;
@@ -3623,7 +3854,6 @@
     exports.UpperCasePipe = UpperCasePipe;
     exports.TitleCasePipe = TitleCasePipe;
     exports.VERSION = VERSION;
-    exports.Version = _angular_core.Version;
     exports.PlatformLocation = PlatformLocation;
     exports.LocationStrategy = LocationStrategy;
     exports.APP_BASE_HREF = APP_BASE_HREF;

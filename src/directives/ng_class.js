@@ -7,10 +7,13 @@
  */
 import { Directive, ElementRef, Input, IterableDiffers, KeyValueDiffers, Renderer } from '@angular/core/index';
 import { isListLikeIterable } from '../facade/collection';
-import { isPresent, stringify } from '../facade/lang';
+import { stringify } from '../facade/lang';
 /**
+ * \@ngModule CommonModule
  *
+ * \@whatItDoes Adds and removes CSS classes on an HTML element.
  *
+ * \@howToUse
  * ```
  *     <some-element [ngClass]="'first second'">...</some-element>
  *
@@ -19,8 +22,11 @@ import { isPresent, stringify } from '../facade/lang';
  *     <some-element [ngClass]="{'first': true, 'second': true, 'third': false}">...</some-element>
  *
  *     <some-element [ngClass]="stringExp|arrayExp|objExp">...</some-element>
+ *
+ *     <some-element [ngClass]="{'class1 class2 class3' : true}">...</some-element>
  * ```
  *
+ * \@description
  *
  * The CSS classes are updated as follows, depending on the type of the expression evaluation:
  * - `string` - the CSS classes listed in the string (space delimited) are added,
@@ -28,6 +34,7 @@ import { isPresent, stringify } from '../facade/lang';
  * - `Object` - keys are CSS classes that get added when the expression given in the value
  *              evaluates to a truthy value, otherwise they are removed.
  *
+ * \@stable
  */
 export class NgClass {
     /**
@@ -76,15 +83,15 @@ export class NgClass {
      */
     ngDoCheck() {
         if (this._iterableDiffer) {
-            const /** @type {?} */ changes = this._iterableDiffer.diff(this._rawClass);
-            if (changes) {
-                this._applyIterableChanges(changes);
+            const /** @type {?} */ iterableChanges = this._iterableDiffer.diff(/** @type {?} */ (this._rawClass));
+            if (iterableChanges) {
+                this._applyIterableChanges(iterableChanges);
             }
         }
         else if (this._keyValueDiffer) {
-            const /** @type {?} */ changes = this._keyValueDiffer.diff(this._rawClass);
-            if (changes) {
-                this._applyKeyValueChanges(changes);
+            const /** @type {?} */ keyValueChanges = this._keyValueDiffer.diff(/** @type {?} */ (this._rawClass));
+            if (keyValueChanges) {
+                this._applyKeyValueChanges(keyValueChanges);
             }
         }
     }
@@ -143,7 +150,7 @@ export class NgClass {
             }
             else {
                 Object.keys(rawClassVal).forEach(klass => {
-                    if (isPresent(rawClassVal[klass]))
+                    if (rawClassVal[klass] != null)
                         this._toggleClass(klass, !isCleanup);
                 });
             }
@@ -157,7 +164,7 @@ export class NgClass {
     _toggleClass(klass, enabled) {
         klass = klass.trim();
         if (klass) {
-            klass.split(/\s+/g).forEach(klass => { this._renderer.setElementClass(this._ngEl.nativeElement, klass, enabled); });
+            klass.split(/\s+/g).forEach(klass => { this._renderer.setElementClass(this._ngEl.nativeElement, klass, !!enabled); });
         }
     }
 }

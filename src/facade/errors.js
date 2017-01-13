@@ -1,5 +1,5 @@
 /**
- * @license undefined
+ * @license
  * Copyright Google Inc. All Rights Reserved.
  *
  * Use of this source code is governed by an MIT-style license that can be
@@ -9,6 +9,9 @@
 export function unimplemented() {
     throw new Error('unimplemented');
 }
+/**
+ * \@stable
+ */
 export class BaseError extends Error {
     /**
      * @param {?} message
@@ -50,9 +53,15 @@ export class BaseError extends Error {
     toString() { return this._nativeError.toString(); }
 }
 function BaseError_tsickle_Closure_declarations() {
-    /** @type {?} */
+    /**
+     * \@internal *
+     * @type {?}
+     */
     BaseError.prototype._nativeError;
 }
+/**
+ * \@stable
+ */
 export class WrappedError extends BaseError {
     /**
      * @param {?} message

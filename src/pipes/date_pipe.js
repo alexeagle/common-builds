@@ -10,6 +10,10 @@ import { NumberWrapper, isDate } from '../facade/lang';
 import { DateFormatter } from './intl';
 import { InvalidPipeArgumentError } from './invalid_pipe_argument_error';
 /**
+ * \@ngModule CommonModule
+ * \@whatItDoes Formats a date according to locale rules.
+ * \@howToUse `date_expression | date[:format]`
+ * \@description
  *
  * Where:
  * - `expression` is a date object or a number (milliseconds since UTC epoch) or an ISO string
@@ -72,6 +76,7 @@ import { InvalidPipeArgumentError } from './invalid_pipe_argument_error';
  *
  * {\@example common/pipes/ts/date_pipe.ts region='DatePipe'}
  *
+ * \@stable
  */
 export class DatePipe {
     /**
@@ -139,7 +144,10 @@ DatePipe.ctorParameters = () => [
     { type: undefined, decorators: [{ type: Inject, args: [LOCALE_ID,] },] },
 ];
 function DatePipe_tsickle_Closure_declarations() {
-    /** @type {?} */
+    /**
+     * \@internal
+     * @type {?}
+     */
     DatePipe._ALIASES;
     /** @type {?} */
     DatePipe.decorators;

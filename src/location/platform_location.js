@@ -22,6 +22,7 @@
  * class
  * they are all platform independent.
  *
+ * \@stable
  * @abstract
  */
 export class PlatformLocation {

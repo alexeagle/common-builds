@@ -9,17 +9,20 @@ import { Attribute, Directive, Host, Input, TemplateRef, ViewContainerRef } from
 import { NgLocalization, getPluralCategory } from '../localization';
 import { SwitchView } from './ng_switch';
 /**
+ * \@ngModule CommonModule
  *
+ * \@whatItDoes Adds / removes DOM sub-trees based on a numeric value. Tailored for pluralization.
  *
+ * \@howToUse
  * ```
  * <some-element [ngPlural]="value">
- *   <ng-container *ngPluralCase="'=0'">there is nothing</ng-container>
- *   <ng-container *ngPluralCase="'=1'">there is one</ng-container>
- *   <ng-container *ngPluralCase="'few'">there are a few</ng-container>
- *   <ng-container *ngPluralCase="'other'">there are exactly #</ng-container>
+ *   <template ngPluralCase="=0">there is nothing</template>
+ *   <template ngPluralCase="=1">there is one</template>
+ *   <template ngPluralCase="few">there are a few</template>
  * </some-element>
  * ```
  *
+ * \@description
  *
  * Displays DOM sub-trees that match the switch expression value, or failing that, DOM sub-trees
  * that match the switch expression's pluralization category.
@@ -34,6 +37,7 @@ import { SwitchView } from './ng_switch';
  *
  * See http://cldr.unicode.org/index/cldr-spec/plural-rules
  *
+ * \@experimental
  */
 export class NgPlural {
     /**
@@ -114,18 +118,22 @@ function NgPlural_tsickle_Closure_declarations() {
     NgPlural.prototype._localization;
 }
 /**
+ * \@ngModule CommonModule
  *
+ * \@whatItDoes Creates a view that will be added/removed from the parent {\@link NgPlural} when the
  *             given expression matches the plural expression according to CLDR rules.
  *
+ * \@howToUse
  * ```
  * <some-element [ngPlural]="value">
- *   <ng-container *ngPluralCase="'=0'">...</ng-container>
- *   <ng-container *ngPluralCase="'other'">...</ng-container>
+ *   <template ngPluralCase="=0">...</template>
+ *   <template ngPluralCase="other">...</template>
  * </some-element>
  * ```
  *
  * See {\@link NgPlural} for more details and example.
  *
+ * \@experimental
  */
 export class NgPluralCase {
     /**

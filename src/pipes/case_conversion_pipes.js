@@ -10,8 +10,9 @@ import { InvalidPipeArgumentError } from './invalid_pipe_argument_error';
 /**
  * Transforms text to lowercase.
  *
- * {\@example  core/pipes/ts/lowerupper_pipe/lowerupper_pipe_example.ts region='LowerUpperPipe' }
+ * {\@example  common/pipes/ts/lowerupper_pipe.ts region='LowerUpperPipe' }
  *
+ * \@stable
  */
 export class LowerCasePipe {
     /**
@@ -42,8 +43,21 @@ function LowerCasePipe_tsickle_Closure_declarations() {
     LowerCasePipe.ctorParameters;
 }
 /**
+ * Helper method to transform a single word to titlecase.
+ *
+ * \@stable
+ * @param {?} word
+ * @return {?}
+ */
+function titleCaseWord(word) {
+    if (!word)
+        return word;
+    return word[0].toUpperCase() + word.substr(1).toLowerCase();
+}
+/**
  * Transforms text to titlecase.
  *
+ * \@stable
  */
 export class TitleCasePipe {
     /**
@@ -56,7 +70,7 @@ export class TitleCasePipe {
         if (typeof value !== 'string') {
             throw new InvalidPipeArgumentError(TitleCasePipe, value);
         }
-        return value[0].toUpperCase() + value.substr(1).toLowerCase();
+        return value.split(/\b/g).map(word => titleCaseWord(word)).join('');
     }
 }
 TitleCasePipe.decorators = [
@@ -76,6 +90,7 @@ function TitleCasePipe_tsickle_Closure_declarations() {
 /**
  * Transforms text to uppercase.
  *
+ * \@stable
  */
 export class UpperCasePipe {
     /**

@@ -8,6 +8,10 @@
 import { Pipe } from '@angular/core/index';
 import { InvalidPipeArgumentError } from './invalid_pipe_argument_error';
 /**
+ * \@ngModule CommonModule
+ * \@whatItDoes Generic selector that displays the string that matches the current value.
+ * \@howToUse `expression | i18nSelect:mapping`
+ * \@description
  *
  *  Where `mapping` is an object that indicates the text that should be displayed
  *  for different values of the provided `expression`.

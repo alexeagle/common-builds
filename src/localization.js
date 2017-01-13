@@ -7,6 +7,7 @@
  */
 import { Inject, Injectable, LOCALE_ID } from '@angular/core/index';
 /**
+ * \@experimental
  * @abstract
  */
 export class NgLocalization {
@@ -22,6 +23,7 @@ export class NgLocalization {
  * - "=value" when the case exists,
  * - the plural category otherwise
  *
+ * \@internal
  * @param {?} value
  * @param {?} cases
  * @param {?} ngLocalization
@@ -44,6 +46,7 @@ export function getPluralCategory(value, cases, ngLocalization) {
 /**
  * Returns the plural case based on the locale
  *
+ * \@experimental
  */
 export class NgLocaleLocalization extends NgLocalization {
     /**
@@ -109,6 +112,7 @@ Plural[Plural.Other] = "Other";
 /**
  * Returns the plural case based on the locale
  *
+ * \@experimental
  * @param {?} locale
  * @param {?} nLike
  * @return {?}

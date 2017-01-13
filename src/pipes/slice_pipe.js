@@ -6,9 +6,12 @@
  * found in the LICENSE file at https://angular.io/license
  */
 import { Pipe } from '@angular/core/index';
-import { isBlank } from '../facade/lang';
 import { InvalidPipeArgumentError } from './invalid_pipe_argument_error';
 /**
+ * \@ngModule CommonModule
+ * \@whatItDoes Creates a new List or String containing a subset (slice) of the elements.
+ * \@howToUse `array_or_string_expression | slice:start[:end]`
+ * \@description
  *
  * Where the input expression is a `List` or `String`, and:
  * - `start`: The starting index of the subset to return.
@@ -46,6 +49,7 @@ import { InvalidPipeArgumentError } from './invalid_pipe_argument_error';
  *
  * {\@example common/pipes/ts/slice_pipe.ts region='SlicePipe_string'}
  *
+ * \@stable
  */
 export class SlicePipe {
     /**
@@ -55,7 +59,7 @@ export class SlicePipe {
      * @return {?}
      */
     transform(value, start, end) {
-        if (isBlank(value))
+        if (value == null)
             return value;
         if (!this.supports(value)) {
             throw new InvalidPipeArgumentError(SlicePipe, value);

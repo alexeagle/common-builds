@@ -7,8 +7,11 @@
  */
 import { Directive, ElementRef, Input, KeyValueDiffers, Renderer } from '@angular/core/index';
 /**
+ * \@ngModule CommonModule
  *
+ * \@whatItDoes Update an HTML element styles.
  *
+ * \@howToUse
  * ```
  * <some-element [ngStyle]="{'font-style': styleExp}">...</some-element>
  *
@@ -17,11 +20,13 @@ import { Directive, ElementRef, Input, KeyValueDiffers, Renderer } from '@angula
  * <some-element [ngStyle]="objExp">...</some-element>
  * ```
  *
+ * \@description
  *
  * The styles are updated according to the value of the expression evaluation:
  * - keys are style names with an optional `.<unit>` suffix (ie 'top.px', 'font-style.em'),
  * - values are the values assigned to those properties (expressed in the given unit).
  *
+ * \@stable
  */
 export class NgStyle {
     /**
@@ -71,8 +76,8 @@ export class NgStyle {
      */
     _setStyle(nameAndUnit, value) {
         const [name, unit] = nameAndUnit.split('.');
-        value = value && unit ? `${value}${unit}` : value;
-        this._renderer.setElementStyle(this._ngEl.nativeElement, name, value);
+        value = value != null && unit ? `${value}${unit}` : value;
+        this._renderer.setElementStyle(this._ngEl.nativeElement, name, /** @type {?} */ (value));
     }
 }
 NgStyle.decorators = [

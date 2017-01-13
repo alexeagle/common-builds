@@ -6,11 +6,14 @@
  * found in the LICENSE file at https://angular.io/license
  */
 import { Pipe } from '@angular/core/index';
-import { isBlank } from '../facade/lang';
 import { NgLocalization, getPluralCategory } from '../localization';
 import { InvalidPipeArgumentError } from './invalid_pipe_argument_error';
 const /** @type {?} */ _INTERPOLATION_REGEXP = /#/g;
 /**
+ * \@ngModule CommonModule
+ * \@whatItDoes Maps a value to a string that pluralizes the value according to locale rules.
+ * \@howToUse `expression | i18nPlural:mapping`
+ * \@description
  *
  *  Where:
  *  - `expression` is a number.
@@ -21,6 +24,7 @@ const /** @type {?} */ _INTERPOLATION_REGEXP = /#/g;
  *
  * {\@example common/pipes/ts/i18n_pipe.ts region='I18nPluralPipeComponent'}
  *
+ * \@experimental
  */
 export class I18nPluralPipe {
     /**
@@ -35,7 +39,7 @@ export class I18nPluralPipe {
      * @return {?}
      */
     transform(value, pluralMap) {
-        if (isBlank(value))
+        if (value == null)
             return '';
         if (typeof pluralMap !== 'object' || pluralMap === null) {
             throw new InvalidPipeArgumentError(I18nPluralPipe, pluralMap);

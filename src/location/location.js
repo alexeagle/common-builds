@@ -8,6 +8,8 @@
 import { EventEmitter, Injectable } from '@angular/core/index';
 import { LocationStrategy } from './location_strategy';
 /**
+ * \@whatItDoes `Location` is a service that applications can use to interact with a browser's URL.
+ * \@description
  * Depending on which {\@link LocationStrategy} is used, `Location` will either persist
  * to the URL's path or the URL's hash segment.
  *
@@ -24,6 +26,7 @@ import { LocationStrategy } from './location_strategy';
  *
  * ### Example
  * {\@example common/location/ts/path_location_component.ts region='LocationComponent'}
+ * \@stable
  */
 export class Location {
     /**
@@ -181,11 +184,20 @@ function Location_tsickle_Closure_declarations() {
      * @type {?}
      */
     Location.ctorParameters;
-    /** @type {?} */
+    /**
+     * \@internal
+     * @type {?}
+     */
     Location.prototype._subject;
-    /** @type {?} */
+    /**
+     * \@internal
+     * @type {?}
+     */
     Location.prototype._baseHref;
-    /** @type {?} */
+    /**
+     * \@internal
+     * @type {?}
+     */
     Location.prototype._platformStrategy;
 }
 /**

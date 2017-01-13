@@ -52,9 +52,12 @@ function SwitchView_tsickle_Closure_declarations() {
     SwitchView.prototype._templateRef;
 }
 /**
+ * \@ngModule CommonModule
  *
+ * \@whatItDoes Adds / removes DOM sub-trees when the nest match expressions matches the switch
  *             expression.
  *
+ * \@howToUse
  * ```
  *     <container-element [ngSwitch]="switch_expression">
  *       <some-element *ngSwitchCase="match_expression_1">...</some-element>
@@ -68,6 +71,7 @@ function SwitchView_tsickle_Closure_declarations() {
  *       <some-element *ngSwitchDefault>...</some-element>
  *     </container-element>
  * ```
+ * \@description
  *
  * `NgSwitch` stamps out nested views when their match expression value matches the value of the
  * switch expression.
@@ -86,6 +90,7 @@ function SwitchView_tsickle_Closure_declarations() {
  * When no matching expression is found on a `ngSwitchCase` view, the `ngSwitchDefault` view is
  * stamped out.
  *
+ * \@stable
  */
 export class NgSwitch {
     constructor() {
@@ -105,10 +110,12 @@ export class NgSwitch {
         }
     }
     /**
+     * \@internal
      * @return {?}
      */
     _addCase() { return this._caseCount++; }
     /**
+     * \@internal
      * @param {?} view
      * @return {?}
      */
@@ -119,6 +126,7 @@ export class NgSwitch {
         this._defaultViews.push(view);
     }
     /**
+     * \@internal
      * @param {?} value
      * @return {?}
      */
@@ -179,15 +187,19 @@ function NgSwitch_tsickle_Closure_declarations() {
     NgSwitch.prototype._ngSwitch;
 }
 /**
+ * \@ngModule CommonModule
  *
+ * \@whatItDoes Creates a view that will be added/removed from the parent {\@link NgSwitch} when the
  *             given expression evaluate to respectively the same/different value as the switch
  *             expression.
  *
+ * \@howToUse
  * ```
  * <container-element [ngSwitch]="switch_expression">
  *   <some-element *ngSwitchCase="match_expression_1">...</some-element>
  * </container-element>
  * ```
+ * \@description
  *
  * Insert the sub-tree when the expression evaluates to the same value as the enclosing switch
  * expression.
@@ -196,6 +208,7 @@ function NgSwitch_tsickle_Closure_declarations() {
  *
  * See {\@link NgSwitch} for more details and example.
  *
+ * \@stable
  */
 export class NgSwitchCase {
     /**
@@ -243,9 +256,12 @@ function NgSwitchCase_tsickle_Closure_declarations() {
     NgSwitchCase.prototype.ngSwitch;
 }
 /**
+ * \@ngModule CommonModule
+ * \@whatItDoes Creates a view that is added to the parent {\@link NgSwitch} when no case expressions
  * match the
  *             switch expression.
  *
+ * \@howToUse
  * ```
  * <container-element [ngSwitch]="switch_expression">
  *   <some-element *ngSwitchCase="match_expression_1">...</some-element>
@@ -253,12 +269,14 @@ function NgSwitchCase_tsickle_Closure_declarations() {
  * </container-element>
  * ```
  *
+ * \@description
  *
  * Insert the sub-tree when no case expressions evaluate to the same value as the enclosing switch
  * expression.
  *
  * See {\@link NgSwitch} for more details and example.
  *
+ * \@stable
  */
 export class NgSwitchDefault {
     /**

@@ -5,7 +5,7 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-import { ChangeDetectorRef, Directive, Input, IterableDiffers, TemplateRef, ViewContainerRef } from '@angular/core/index';
+import { ChangeDetectorRef, Directive, Input, IterableDiffers, TemplateRef, ViewContainerRef, isDevMode } from '@angular/core/index';
 import { getTypeNameForDebugging } from '../facade/lang';
 export class NgForRow {
     /**
@@ -105,6 +105,7 @@ function NgForRow_tsickle_Closure_declarations() {
  * See a [live demo](http://plnkr.co/edit/KVuXxDp0qinGDyo307QW?p=preview) for a more detailed
  * example.
  *
+ * \@stable
  */
 export class NgFor {
     /**
@@ -120,6 +121,24 @@ export class NgFor {
         this._cdr = _cdr;
         this._differ = null;
     }
+    /**
+     * @param {?} fn
+     * @return {?}
+     */
+    set ngForTrackBy(fn) {
+        if (isDevMode() && fn != null && typeof fn !== 'function') {
+            // TODO(vicb): use a log service once there is a public one available
+            if ((console) && (console.warn)) {
+                console.warn(`trackBy must be a function, but received ${JSON.stringify(fn)}. ` +
+                    `See https://angular.io/docs/ts/latest/api/common/index/NgFor-directive.html#!#change-propagation for more information.`);
+            }
+        }
+        this._trackByFn = fn;
+    }
+    /**
+     * @return {?}
+     */
+    get ngForTrackBy() { return this._trackByFn; }
     /**
      * @param {?} value
      * @return {?}
@@ -229,9 +248,9 @@ function NgFor_tsickle_Closure_declarations() {
     /** @type {?} */
     NgFor.prototype.ngForOf;
     /** @type {?} */
-    NgFor.prototype.ngForTrackBy;
-    /** @type {?} */
     NgFor.prototype._differ;
+    /** @type {?} */
+    NgFor.prototype._trackByFn;
     /** @type {?} */
     NgFor.prototype._viewContainer;
     /** @type {?} */
